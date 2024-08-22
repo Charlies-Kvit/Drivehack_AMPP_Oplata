@@ -1,3 +1,4 @@
+import requests
 import sys
 from interfaces.main import Ui_MainWindow as Main
 from PyQt5.QtWidgets import QMainWindow, QApplication
@@ -7,10 +8,12 @@ class MainApp(QMainWindow, Main):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        # self.send.clicked.connect()
+        self.send.clicked.connect(self.get_event)
 
-    """def get_event(self):
-        auto_number"""
+    def get_event(self):
+        auto_number = self.auto_number.text()
+
+        # self.answer.setText()
 
 
 if __name__ == "__main__":
