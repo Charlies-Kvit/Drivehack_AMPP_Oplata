@@ -30,6 +30,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.auto_number)
         self.send = QtWidgets.QPushButton(self.widget)
         self.send.setObjectName("send")
+        self.send.setStyleSheet("background-color: white;")
         self.verticalLayout_2.addWidget(self.send)
         self.answer = QtWidgets.QTextBrowser(self.widget)
         self.answer.setObjectName("answer")
