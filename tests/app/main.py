@@ -2,6 +2,7 @@ import requests
 import sys
 from interfaces.main import Ui_MainWindow as Main
 from PyQt5.QtWidgets import QMainWindow, QApplication
+from config import ip, port, protocol
 
 
 class MainApp(QMainWindow, Main):
@@ -12,8 +13,8 @@ class MainApp(QMainWindow, Main):
 
     def get_event(self):
         auto_number = self.auto_number.text()
-
-        # self.answer.setText()
+        answer = requests.get(f"{protocol}://{ip}:{port}/api/{auto_number}")
+        self.answer.setText(str(answer.json()))
 
 
 if __name__ == "__main__":
