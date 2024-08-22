@@ -15,7 +15,12 @@ class MainApp(QMainWindow, Main):
     def get_event(self):
         auto_number = self.auto_number.text()
         answer = requests.get(f"{protocol}://{ip}:{port}/api/{auto_number}")
-        self.answer.setText(str(answer.json()))
+        event = bool(answer.json()['event'])
+        if event:
+            message = answer.json()['message']
+        else:
+            message = "no notification"
+        self.answer.setText(message)
 
 
 if __name__ == "__main__":
