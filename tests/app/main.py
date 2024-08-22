@@ -10,7 +10,7 @@ class MainApp(QMainWindow, Main):
         super().__init__()
         self.setupUi(self)
         self.send.clicked.connect(self.get_event)
-        self.setStyleSheet('background-color: #90EE90;')
+        self.setStyleSheet('background-color: #67c33a;')
 
     def get_event(self):
         auto_number = self.auto_number.text()
