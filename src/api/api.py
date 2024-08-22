@@ -1,11 +1,14 @@
 from fastapi import FastAPI
+from src.data import db_session
+from src.data.client import Client
+from src.api.replace_auto_num import replace_auto_num
 import uvicorn
 
 app = FastAPI()
 
 
 @app.get("/")
-def read_root():
+def index():
     return {"Hello": "World, and Moscow State Transport in particular"}
 
 
@@ -15,36 +18,14 @@ plates = {"А100НЕ199": "водила дебил", "В092АУ199": "круто
 
 
 @app.get("/api/{car_plate}")
-def read_item(car_plate: str):
+def get_notification(car_plate: str):
     car_plate = list(car_plate)
-    for i in range(len(car_plate)):
-        match car_plate[i].upper():
-            case "A":
-                car_plate[i] = "А"
-            case "B":
-                car_plate[i] = "В"
-            case "C":
-                car_plate[i] = "С"
-            case "T":
-                car_plate[i] = "Т"
-            case "Y":
-                car_plate[i] = "У"
-            case "P":
-                car_plate[i] = "Р"
-            case "M":
-                car_plate[i] = "М"
-            case "O":
-                car_plate[i] = "О"
-            case "E":
-                car_plate[i] = "Е"
-            case "K":
-                car_plate[i] = "К"
-            case "X":
-                car_plate[i] = "Х"
-            case "H":
-                car_plate[i] = "Н"
-    car_plate = "".join(car_plate)
-    print(car_plate[0] in al)
+    car_plate = replace_auto_num(car_plate)
+    session = db_session.create_session()
+    in_database = session.query(Client).filter(Client.auto_number.upper() == car_plate.upper())
+    session.close()
+    if not in_database:
+        return {"event": False}
     try:
         if not (str(car_plate[0]) in al and (car_plate[1] in numbers) and (car_plate[2] in numbers) and (
                 car_plate[3] in numbers) and (car_plate[4] in al) and (car_plate[5] in al) and int(
@@ -59,4 +40,5 @@ def read_item(car_plate: str):
 
 
 if __name__ == '__main__':
+    db_session.global_init("../db/db.sqlite")
     uvicorn.run(app, port=8080, host='0.0.0.0')
