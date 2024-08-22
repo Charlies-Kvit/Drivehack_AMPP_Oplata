@@ -21,7 +21,7 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(811, 569)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.pixmap = QPixmap('C:\\Users\\USER\\PycharmProjects\\Drivehack_AMPP_Oplata\\tests\\image.png')
+        self.pixmap = QPixmap('..\image.png')
         self.pixmap = self.pixmap.scaled(800, 600, aspectRatioMode=Qt.KeepAspectRatio)
         self.image_label = QLabel(self)
         self.image_label.setPixmap(self.pixmap)
