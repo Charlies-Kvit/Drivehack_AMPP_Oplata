@@ -9,6 +9,11 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QPixmap
+
+from PyQt5.QtWidgets import QLabel
+
+from PyQt5.QtCore import Qt
 
 
 class Ui_MainWindow(object):
@@ -16,6 +21,10 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(811, 569)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.pixmap = QPixmap('..\image.png')
+        self.pixmap = self.pixmap.scaled(800, 600, aspectRatioMode=Qt.KeepAspectRatio)
+        self.image_label = QLabel(self)
+        self.image_label.setPixmap(self.pixmap)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
@@ -32,12 +41,14 @@ class Ui_MainWindow(object):
         self.send.setObjectName("send")
         self.send.setStyleSheet("background-color: white;")
         self.verticalLayout_2.addWidget(self.send)
+        self.verticalLayout_2.addWidget(self.image_label)
         self.answer = QtWidgets.QTextBrowser(self.widget)
         self.answer.setObjectName("answer")
         self.verticalLayout_2.addWidget(self.answer)
         self.gridLayout.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
         self.verticalLayout_3.addWidget(self.widget)
         MainWindow.setCentralWidget(self.centralwidget)
+        self.image_label
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 811, 26))
         self.menubar.setObjectName("menubar")
