@@ -2,11 +2,6 @@ uvicorn
 fastapi
 sqlalchemy
 werkzeug
-matplotlib
-cv2
+opencv-python
 tensorflow
-glob
-plotly
 pytesseract
-elementpath
-sklearn
