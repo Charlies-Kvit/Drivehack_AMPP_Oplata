@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'tests/app/ui/main.ui'
+# Form implementation generated from reading ui file 'C:\Users\popgd\Downloads\Telegram Desktop\main.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -9,19 +9,17 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QPixmap
-
 from PyQt5.QtWidgets import QLabel
-
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(811, 569)
+        MainWindow.resize(746, 569)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.pixmap = QPixmap('..\image.png')
+        self.pixmap = QPixmap('image.png')
         self.pixmap = self.pixmap.scaled(800, 600, aspectRatioMode=Qt.KeepAspectRatio)
         self.image_label = QLabel(self)
         self.image_label.setPixmap(self.pixmap)
@@ -39,18 +37,25 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.auto_number)
         self.send = QtWidgets.QPushButton(self.widget)
         self.send.setObjectName("send")
-        self.send.setStyleSheet("background-color: white;")
         self.verticalLayout_2.addWidget(self.send)
-        self.verticalLayout_2.addWidget(self.image_label)
         self.answer = QtWidgets.QTextBrowser(self.widget)
         self.answer.setObjectName("answer")
         self.verticalLayout_2.addWidget(self.answer)
-        self.gridLayout.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
+        self.gridLayout.addLayout(self.verticalLayout_2, 1, 0, 1, 1)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.register_2 = QtWidgets.QPushButton(self.widget)
+        self.register_2.setObjectName("register_2")
+        self.horizontalLayout_3.addWidget(self.register_2)
+        self.login = QtWidgets.QPushButton(self.widget)
+        self.image_label
+        self.login.setObjectName("login")
+        self.horizontalLayout_3.addWidget(self.login)
+        self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
         self.verticalLayout_3.addWidget(self.widget)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.image_label
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 811, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 746, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -64,3 +69,5 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.send.setText(_translate("MainWindow", "Получить уведомление"))
+        self.register_2.setText(_translate("MainWindow", "Зарегистрироваться"))
+        self.login.setText(_translate("MainWindow", "Войти"))
