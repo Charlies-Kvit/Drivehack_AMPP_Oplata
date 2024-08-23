@@ -21,16 +21,16 @@ plates = {"А100НЕ199": "водила дебил", "В092АУ199": "круто
 def get_notification(car_plate: str):
     car_plate = list(car_plate)
     car_plate = replace_auto_num(car_plate)
-    session = db_session.create_session()
-    in_database = session.query(Client).filter(Client.auto_number.upper() == car_plate.upper())
-    session.close()
-    if not in_database:
-        return {"event": False}
     try:
         if not (str(car_plate[0]) in al and (car_plate[1] in numbers) and (car_plate[2] in numbers) and (
                 car_plate[3] in numbers) and (car_plate[4] in al) and (car_plate[5] in al) and int(
                 car_plate[6:]) < 900):
             return {"event": False, "error": "несуществующий номер"}
+        session = db_session.create_session()
+        in_database = session.query(Client).filter(Client.auto_number.upper() == car_plate.upper())
+        session.close()
+        if not in_database:
+            return {"event": False}
         elif car_plate.upper() in plates.keys():
             return {"event": True, "message": plates[car_plate.upper()]}
         else:
