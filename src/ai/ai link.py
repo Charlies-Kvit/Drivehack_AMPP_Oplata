@@ -1,16 +1,9 @@
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import os
 import cv2
 import tensorflow as tf
-import glob
-import plotly.express as px
 import pytesseract as pt
 
 from PIL import Image
-from xml.etree import ElementTree as et
-from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import InceptionResNetV2
 from tensorflow.keras.models import Model
@@ -70,23 +63,23 @@ def predict_plate_coords(filepath):
 #    file.write(str(et.tostring(annotation))[2:][:-1])
 #    file.close()
 
-data_dir = "C:/photo_5348337390491657143_w.jpg"
+def testPlate(filepath:str):
+    minX, maxX, minY, maxY = predict_plate_coords(str)
+    #xmlFileGen(image, minX, maxX, minY, maxY)
+    img = cv2.imread(data_dir,1)
+    #cv2.rectangle(img,(minX,minY),(maxX,maxY),(0,255,0),2)
+    cropped = img[minY:maxY, minX:maxX]
 
-minX, maxX, minY, maxY = predict_plate_coords(data_dir)
-
-
-#xmlFileGen(image, minX, maxX, minY, maxY)
-img = cv2.imread(data_dir,1)
-cv2.rectangle(img,(minX,minY),(maxX,maxY),(0,255,0),2)
-cropped = img[minY:maxY, minX:maxX]
-
-imgheight=cropped.shape[0]
-imgwidth=cropped.shape[1]
-
-cv2.imshow("jadfhjkghsdfjl", cropped)
+#cv2.imshow("jadfhjkghsdfjl", cropped)
 #cv2.imshow("jadfhjkghsdfjl", img)
-output = pt.image_to_string(cropped)
-print(output)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    output = pt.image_to_string(cropped)
+    return output
+#cv2.waitKey(0)
+#cv2.destroyAllWindows()
+#data_dir = "C:/photo_5348337390491657143_w.jpg"
+
+
+
+
+
 
