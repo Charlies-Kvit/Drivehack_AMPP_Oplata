@@ -26,7 +26,7 @@ def get_notification(car_plate: str):
     try:
         if not (str(car_plate[0]) in al and (car_plate[1] in numbers) and (car_plate[2] in numbers) and (
                 car_plate[3] in numbers) and (car_plate[4] in al) and (car_plate[5] in al) and int(
-                car_plate[6:]) < 900):
+            car_plate[6:]) < 900):
             return {"event": False, "error": "несуществующий номер"}
         session = db_session.create_session()
         in_database = session.query(Client).filter(Client.auto_number.upper() == car_plate.upper())
@@ -39,20 +39,18 @@ def get_notification(car_plate: str):
             return {"event": False}
     except:
         return {"event": False, "error": "несуществующий номер"}
+
+
 @app.get("/api/login")
 def login_view(login: str, password: str):
-    if os.path.exists("users.json"):
-        with open("users.json", "r") as f:
-            users = json.load(f)
-    else:
-        users = dict()
-    if login in users.keys() :
-        if users[login]["password"] == password :
-            return {"event":True, "login": True, "message": "Вы залогинены."}
+    if login in users.keys():
+        if users[login]["password"] == password:
+            return {"event": True, "login": True, "message": "Вы залогинены."}
         else:
             return {"event": False, "login": False, "message": "Пароль неверный."}
     else:
         return {"event": False, "login": False, "message": "Нет такого пользователя, попробуйте зарегистрироваться."}
+
 
 @app.get("/api/registration")
 def registration_view(phone_number: int, car_number: str, login: str, password: str):
@@ -61,10 +59,12 @@ def registration_view(phone_number: int, car_number: str, login: str, password: 
             users = json.load(f)
     else:
         users = dict()
-    if login not in users.keys() :
-        return {"event":True, "login": True, "message": "Вы зарегистрированы."}
+    if login not in users.keys():
+        return {"event": True, "login": True, "message": "Вы зарегистрированы."}
     else:
         return {"event": True, "login": True, "message": "Такой пользователь уже есть."}
+
+
 if __name__ == '__main__':
     db_session.global_init("../db/db.sqlite")
     uvicorn.run(app, port=8080, host='0.0.0.0')
