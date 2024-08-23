@@ -2,7 +2,9 @@ from fastapi import FastAPI, Request
 from src.data import db_session
 from src.data.client import Client
 from src.api.replace_auto_num import replace_auto_num
+from string import ascii_letters
 import uvicorn
+import random
 
 app = FastAPI()
 
@@ -56,13 +58,31 @@ async def login_view(request: Request):
 
 @app.get("/api/registration")
 async def registration_view(request: Request):
-
+    json_data = await request.json()
     session = db_session.create_session()
-
-    if login not in users.keys():
-        return {"event": True, "login": True, "message": "Вы зарегистрированы."}
+    user = session.query(Client).filter(Client.phone_number == json_data['phone_number'])
+    if not user:
+        token = secret_key_generator(20)
+        client = Client(
+            login=json_data['login'],
+            auto_number=json_data['auto_number'],
+            phone_number=json_data['phone_number'],
+            token=token
+        )
+        client.set_password(json_data['password'])
+        session.add(client)
+        session.commit()
+        session.close()
+        return {"event": True, "login": True, "message": "Вы зарегистрированы.", "token": token}
     else:
-        return {"event": True, "login": True, "message": "Такой пользователь уже есть."}
+        return {"event": True, "login": False, "message": "Такой пользователь уже есть."}
+
+
+def secret_key_generator(length):
+    key = list()
+    for _ in range(int(length)):
+        key.append(random.choice(ascii_letters))
+    return ''.join(key)
 
 
 if __name__ == '__main__':
