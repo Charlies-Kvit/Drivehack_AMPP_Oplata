@@ -1,3 +1,5 @@
+import json
+
 from fastapi import FastAPI
 from src.data import db_session
 from src.data.client import Client
@@ -37,8 +39,32 @@ def get_notification(car_plate: str):
             return {"event": False}
     except:
         return {"event": False, "error": "несуществующий номер"}
+@app.get("/api/login")
+def login_view(login: str, password: str):
+    if os.path.exists("users.json"):
+        with open("users.json", "r") as f:
+            users = json.load(f)
+    else:
+        users = dict()
+    if login in users.keys() :
+        if users[login]["password"] == password :
+            return {"event":True, "login": True, "message": "Вы залогинены."}
+        else:
+            return {"event": False, "login": False, "message": "Пароль неверный."}
+    else:
+        return {"event": False, "login": False, "message": "Нет такого пользователя, попробуйте зарегистрироваться."}
 
-
+@app.get("/api/registration")
+def registration_view(phone_number: int, car_number: str, login: str, password: str):
+    if os.path.exists("users.json"):
+        with open("users.json", "r") as f:
+            users = json.load(f)
+    else:
+        users = dict()
+    if login not in users.keys() :
+        return {"event":True, "login": True, "message": "Вы зарегистрированы."}
+    else:
+        return {"event": True, "login": True, "message": "Такой пользователь уже есть."}
 if __name__ == '__main__':
     db_session.global_init("../db/db.sqlite")
     uvicorn.run(app, port=8080, host='0.0.0.0')
