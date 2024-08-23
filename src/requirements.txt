@@ -2,3 +2,6 @@ uvicorn
 fastapi
 sqlalchemy
 werkzeug
+opencv-python
+tensorflow
+pytesseract
